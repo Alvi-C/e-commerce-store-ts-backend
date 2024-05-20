@@ -16,7 +16,26 @@ const createProduct = async (req: Request, res: Response) => {
     const typedError = error as Error;
     res.status(500).json({
       success: false,
-      message: typedError.message,
+      message: 'Route not found',
+      error: typedError,
+    });
+  }
+};
+
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    // call service function to get all products
+    const result = await ProductServices.getAllProductsFromDB();
+    res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    const typedError = error as Error;
+    res.status(500).json({
+      success: false,
+      message: 'Route not found',
       error: typedError,
     });
   }
@@ -24,4 +43,5 @@ const createProduct = async (req: Request, res: Response) => {
 
 export const ProductControllers = {
   createProduct,
+  getAllProducts,
 };
