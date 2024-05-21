@@ -10,6 +10,7 @@ productsRouter
 
 productsRouter
   .route('/products/:productId')
-  .get(ProductControllers.getASingleProduct);
+  .get(ProductControllers.getASingleProduct)
+  .put(ProductControllers.updateProduct);
 
 export default productsRouter;
