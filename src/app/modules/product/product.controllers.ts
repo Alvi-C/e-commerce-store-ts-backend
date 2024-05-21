@@ -50,8 +50,10 @@ const createProduct = async (req: Request, res: Response) => {
 //--------> Get all product <--------
 const getAllProducts = async (req: Request, res: Response) => {
   try {
+    // get search term from request query param string if it exists
+    const searchTerm = req.query?.searchTerm as string;
     // call service function to get all products
-    const result = await ProductServices.getAllProductsFromDB();
+    const result = await ProductServices.getAllProductsFromDB(searchTerm);
 
     // Check if products were found
     if (!result || result.length === 0) {
