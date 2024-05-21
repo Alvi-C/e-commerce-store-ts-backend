@@ -50,9 +50,10 @@ const createProduct = async (req: Request, res: Response) => {
 //--------> Get all product <--------
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    // get search term from request query param string if it exists
+    // get search term from request query param string if query param exists
     const searchTerm = req.query?.searchTerm as string;
-    // call service function to get all products
+
+    // call service function to get all products or products matching search term
     const result = await ProductServices.getAllProductsFromDB(searchTerm);
 
     // Check if products were found
@@ -63,10 +64,15 @@ const getAllProducts = async (req: Request, res: Response) => {
       });
     }
 
+    // Success message as response
+    const successMessage = searchTerm
+      ? `Products matching search term '${searchTerm}' fetched successfully!`
+      : 'Products fetched successfully!';
+
     // Respond with success if products were found
     res.status(200).json({
       success: true,
-      message: 'Products fetched successfully!',
+      message: successMessage,
       data: result,
     });
   } catch (error) {
