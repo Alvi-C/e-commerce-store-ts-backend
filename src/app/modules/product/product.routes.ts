@@ -11,6 +11,7 @@ productsRouter
 productsRouter
   .route('/products/:productId')
   .get(ProductControllers.getASingleProduct)
-  .put(ProductControllers.updateProduct);
+  .put(ProductControllers.updateProduct)
+  .delete(ProductControllers.deleteProduct);
 
 export default productsRouter;
