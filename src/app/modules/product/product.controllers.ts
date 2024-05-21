@@ -3,6 +3,7 @@ import { ProductServices } from './product.services';
 import productValidationSchema from './product.validation';
 import { z } from 'zod';
 
+//--------> Create a new product <--------
 const createProduct = async (req: Request, res: Response) => {
   try {
     // get data from request body
@@ -35,6 +36,7 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+//--------> Get all product <--------
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     // call service function to get all products
@@ -54,7 +56,31 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+//--------> Get a single product <--------
+
+const getASingleProduct = async (req: Request, res: Response) => {
+  try {
+    // get product id from request params
+    const { productId } = req.params;
+    // call service function to get a single product
+    const result = await ProductServices.getASingleProductFromDB(productId);
+    res.status(200).json({
+      success: true,
+      message: 'Product fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    const typedError = error as Error;
+    res.status(500).json({
+      success: false,
+      message: 'Route not found',
+      error: typedError,
+    });
+  }
+};
+
 export const ProductControllers = {
   createProduct,
   getAllProducts,
+  getASingleProduct,
 };

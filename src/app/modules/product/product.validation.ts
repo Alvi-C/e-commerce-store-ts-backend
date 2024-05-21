@@ -6,7 +6,7 @@ const variantValidationSchema = z.object({
 });
 
 const inventoryValidationSchema = z.object({
-  quantity: z.number().positive('Quantity must be positive'),
+  quantity: z.number().positive('Quantity must be positive number'),
   inStock: z.boolean(),
 });
 
@@ -16,7 +16,7 @@ const productValidationSchema = z.object({
     .string()
     .trim()
     .min(10, 'Description must be at least 10 characters'),
-  price: z.number().positive('Price must be positive'),
+  price: z.number().positive('Price must be positive number'),
   category: z.string().trim().min(1, 'Category is required'),
   tags: z.array(z.string().trim().min(1, 'Tag cannot be empty')),
   variants: z
