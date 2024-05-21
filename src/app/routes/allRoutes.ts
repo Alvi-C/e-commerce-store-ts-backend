@@ -11,6 +11,6 @@ router.get('/test', (req: Request, res: Response) => {
 });
 
 // product route
-router.use('/api', productsRouter);
+router.use('/', productsRouter);
 
 export default router;

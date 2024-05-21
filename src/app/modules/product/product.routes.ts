@@ -4,12 +4,12 @@ import { ProductControllers } from './product.controllers';
 const productsRouter = express.Router();
 
 productsRouter
-  .route('/products')
+  .route('/api/products')
   .post(ProductControllers.createProduct)
   .get(ProductControllers.getAllProducts);
 
 productsRouter
-  .route('/products/:productId')
+  .route('/api/products/:productId')
   .get(ProductControllers.getASingleProduct)
   .put(ProductControllers.updateProduct)
   .delete(ProductControllers.deleteProduct);
