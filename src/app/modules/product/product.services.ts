@@ -41,10 +41,42 @@ const deleteAProductFromDB = async (productId: string) => {
   return result;
 };
 
+const getProductAvailability = async (productId: string) => {
+  const result = await ProductModel.findById(productId);
+  if (!result) {
+    throw new Error('Product not found!');
+  }
+  return {
+    quantity: result.inventory.quantity,
+    inStock: result.inventory.inStock,
+  };
+};
+
+const updateProductInventoryDuringOrder = async (
+  productId: string,
+  quantityChanged: number,
+) => {
+  const result = await ProductModel.findByIdAndUpdate(
+    productId,
+    {
+      $inc: { 'inventory.quantity': -quantityChanged },
+    },
+    { new: true },
+  );
+
+  if (result && result.inventory.quantity <= 0) {
+    await ProductModel.findByIdAndUpdate(productId, {
+      $set: { 'inventory.inStock': false },
+    });
+  }
+};
+
 export const ProductServices = {
   createProductIntoDB,
   getAllProductsFromDB,
   getASingleProductFromDB,
   updateAProductInDB,
   deleteAProductFromDB,
+  getProductAvailability,
+  updateProductInventoryDuringOrder,
 };
