@@ -4,10 +4,10 @@ import orderRouter from '../modules/order/order.routes';
 
 const router = express.Router();
 
-// test route
-router.get('/test', (req: Request, res: Response) => {
+// Welcome route
+router.get('/', (req: Request, res: Response) => {
   res.status(200).json({
-    message: '🎉🎉 Test route is working! 🎉🎉',
+    message: '🎉🎉 Welcome to e-commerce store backend! 🎉🎉',
   });
 });
 
