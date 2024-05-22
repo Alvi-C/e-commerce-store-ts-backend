@@ -70,8 +70,11 @@ const createOrder = async (req: Request, res: Response) => {
 //--------> Get all orders <--------
 const getAllOrders = async (req: Request, res: Response) => {
   try {
+    // get email from request query param string if query param exists
+    const queryEmail = req.query?.email as string;
+
     // call service function to get all orders
-    const result = await OrderServices.getAllOrdersFromDB();
+    const result = await OrderServices.getAllOrdersFromDB(queryEmail);
 
     // Check if orders were found
     if (!result || result.length === 0) {
@@ -81,10 +84,15 @@ const getAllOrders = async (req: Request, res: Response) => {
       });
     }
 
+    // Success message as response
+    const successMessage = queryEmail
+      ? `Orders matching search term '${queryEmail}' fetched successfully!`
+      : 'Orders fetched successfully!';
+
     // Respond with success if orders were found
     res.status(200).json({
       success: true,
-      message: 'Orders fetched successfully!',
+      message: successMessage,
       data: result,
     });
   } catch (error) {
